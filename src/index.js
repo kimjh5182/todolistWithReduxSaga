@@ -20,7 +20,6 @@ import { Provider } from 'react-redux';
 import Main from './components/main';
 
 
-import getTodoApi from './@api/todo';
 import store from './store';
 
 export default class App extends React.Component{
