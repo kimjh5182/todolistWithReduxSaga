@@ -3,45 +3,43 @@ import config from '../config';
 
 const getTodoList = async () => {
   console.log(config.api + 'todo/');
-  const response = await axios.get(
-    config.api + 'todo/',
-  );
-  console.log(response)
+  const response = await axios.get(config.api + 'todo/');
+  console.log(response);
   return response;
 };
 
-const deleteTodo = async id =>{
-  console.log(config.api + 'todo/'+String(id)+'/');
-  const response = await axios.delete(
-    config.api + 'todo/'+String(id)+'/',
-  );
-  console.log('delete',response)
+const deleteTodo = async id => {
+  console.log(config.api + 'todo/' + String(id) + '/');
+  const response = await axios.delete(config.api + 'todo/' + String(id) + '/');
+  console.log('delete', response);
   return response;
-}
+};
 
-const createTodo = async content =>{
+const createTodo = async content => {
   console.log(config.api + 'todo/');
-  const response = await axios.post(
-    config.api + 'todo/',{content:content}
-  );
-  console.log(response)
+  const response = await axios.post(config.api + 'todo/', {content: content});
+  console.log(response);
   return response;
-}
+};
 
-const updateTodo = async (id,content) =>{
-  console.log(config.api + 'todo/'+String(id)+'/');
+const updateTodo = async payload => {
+  console.log(config.api + 'todo/' + String(payload.id) + '/');
+  console.log(payload);
   const response = await axios.patch(
-    config.api + 'todo/'+String(id)+'/',{content:content}
+    config.api + 'todo/' + String(payload.id) + '/',
+    {
+      content: payload.content,
+    },
   );
-  console.log(response)
+  console.log(response);
   return response;
-}
+};
 
 const getTodoApi = {
-    getTodoList,
-    deleteTodo,
-    createTodo,
-    updateTodo
+  getTodoList,
+  deleteTodo,
+  createTodo,
+  updateTodo,
 };
 
 export default getTodoApi;

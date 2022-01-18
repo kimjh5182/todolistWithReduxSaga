@@ -1,12 +1,10 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { deleteTodo, fetchLists } from "../actions";
-import { Text, TouchableOpacity, View } from "react-native";
+import React, {useEffect} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
+import {deleteTodo, fetchLists, setId, getTodo} from '../actions';
+import {Text, TouchableOpacity, View, Button} from 'react-native';
 
-import Add from "./Add";
-import Detail from "./Detail"
-
-import { getTodo } from "../actions";
+import Add from './Add';
+import Detail from './Detail';
 
 const Main = () => {
   const lists = useSelector(state => state.lists);
@@ -14,32 +12,54 @@ const Main = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getTodo());
-  }, [dispatch]);
+  }, []);
 
   const renderLists = () =>
     lists.length > 0 ? (
-      lists.map(list => <View key={list.id}>
-        <Text>{list.content}</Text>
-        <TouchableOpacity
-         style={{ width: 200, height: 18, left: 20, backgroundColor: "blue", position: "absolute" }}
-          onPress={() => dispatch(deleteTodo(list.id))}>
+      lists.map(list => (
+        <View
+          key={list.id}
+          style={{
+            height: 30,
+            flexDirection: 'row',
+            display: 'flex',
+            width: '100%',
+            borderWidth: 1,
+            borderRadius: 3,
+            alignItems: 'center',
+            padding: 5,
+          }}>
+          <TouchableOpacity
+            style={{flex: 4}}
+            onPress={() => {
+              dispatch(setId(list.id));
+            }}>
+            <Text numberOfLines={1}>{list.content}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              flex: 1,
+              alignItems: 'center',
+              borderRadius: 1,
+              borderWidth: 1,
+            }}
+            onPress={() => dispatch(deleteTodo(list.id))}>
             <Text>삭제</Text>
           </TouchableOpacity>
-          </View>)
+        </View>
+      ))
     ) : (
       <Text>loading...</Text>
     );
   if (editId === null) {
     return (
-      <>
+      <View style={{padding: 20}}>
         <Add />
         {renderLists()}
-      </>
+      </View>
     );
-  } else{
-    return (
-      <Detail />
-    );
+  } else {
+    return <Detail />;
   }
 };
 

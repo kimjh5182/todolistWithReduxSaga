@@ -1,23 +1,39 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { useForm } from "react-hook-form";
-import { addList, createTodo } from "../actions";
-import { View,TextInput,Button,Text } from "react-native";
+import React, {useState} from 'react';
+import {useDispatch} from 'react-redux';
+import {addList, createTodo} from '../actions';
+import {View, TextInput, TouchableOpacity, Text} from 'react-native';
 
 const Add = () => {
   const dispatch = useDispatch();
-  const [text, setText] = useState("");
+  const [text, setText] = useState('');
 
   return (
-    <View>
-        <View>
-          <TextInput
-            onChangeText={(text) => {setText(text)}}
-            placeholder="아무거나 입력해주세요."
-          />
-          <Button title="제출"onPress={() => dispatch(createTodo(text))}/>
-        </View>
-      </View>
+    <View
+      style={{
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 10,
+      }}>
+      <TextInput
+        style={{flex: 4, borderWidth: 1}}
+        onChangeText={text => {
+          setText(text);
+        }}
+        placeholder="Enter todo"
+      />
+      <TouchableOpacity
+        style={{
+          flex: 1,
+          height: 25,
+          borderRadius: 1,
+          borderWidth: 1,
+          alignItems: 'center',
+        }}
+        onPress={() => dispatch(createTodo(text))}>
+        <Text>추가</Text>
+      </TouchableOpacity>
+    </View>
   );
 };
 
